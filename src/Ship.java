@@ -4,26 +4,30 @@ import java.awt.event.KeyListener;
 public class Ship extends Polygon implements KeyListener {
     boolean up = false, down = false, right = false, left = false, stop = true, start = true;
 
+
     public Ship(Point[] inShape, Point inPosition, double inRotation) {
         super(inShape, inPosition, inRotation);
     }
     public void move(){
+
         if(!start) {
-            accelerate(2);
+            position.x += pull.x;
+            position.y += pull.y;
         }
         if(up) {
-            accelerate(10);
+            accelerate(0.3);
         }
-
-        if(right){
+        else if(right){
             rotate(10);
+
         }
-        if(left){
+        else if(left){
             rotate(-10);
         }
         if(position.x > 800){
             position.x = 0;
         }
+
         if(position.x < 0){
             position.x = 800;
         }
@@ -36,8 +40,8 @@ public class Ship extends Polygon implements KeyListener {
 
     }
     public void accelerate (double acceleration) {
-        position.x += (acceleration * Math.cos(Math.toRadians(rotation)));
-        position.y += (acceleration * Math.sin(Math.toRadians(rotation)));
+        pull.x += (acceleration * Math.cos(Math.toRadians(rotation)));
+        pull.y += (acceleration * Math.sin(Math.toRadians(rotation)));
     }
 
     @Override
@@ -65,11 +69,6 @@ public class Ship extends Polygon implements KeyListener {
             System.out.println("left");
             left = true;
         }
-//        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-//            System.out.println("space");
-//            space = true;
-//            move();
-//        }
 
     }
 

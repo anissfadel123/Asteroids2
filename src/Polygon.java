@@ -16,12 +16,13 @@ class Polygon {
   public Point[] shape;   // An array of points.
   public Point position;   // The offset mentioned above.
   public double rotation; // Zero degrees is due east.
+  public Point pull;
   
   public Polygon(Point[] inShape, Point inPosition, double inRotation) {
     shape = inShape;
     position = inPosition;
     rotation = inRotation;
-    
+    pull = new Point(0,0);
     // First, we find the shape's top-most left-most boundary, its origin.
     Point origin = shape[0].clone();
     for (Point p : shape) {
@@ -101,21 +102,36 @@ class Polygon {
     return new Point(Math.abs(sum.x/(6*area)),Math.abs(sum.y/(6*area)));
   }
   public int[] getXPoints(){
-    System.out.println("bbbbbb");
+//    System.out.println("bbbbbb");
     if(shape == null || shape.length==0) return null;
     int[] x = new int[shape.length];
-    for(int i=0; i<shape.length; i++){
-      x[i] = (int) Math.round(shape[i].getX());
+//    for(int i=0; i<shape.length; i++){
+//      System.out.println("shitttttt");
+//      x[i] = (int) Math.round(shape[i].getX());
+//
+//    }
+    Point[] p = getPoints();
+
+    for(int i=0; i<p.length; i++){
+      x[i] = (int) Math.round(p[i].getX());
     }
+//
     return x;
   }
   public int[] getYPoints(){
     if(shape == null || shape.length==0) return null;
+    Point[] p = getPoints();
+
+//    int[] y = new int[shape.length];
+//    for(int i=0; i<shape.length; i++){
+//      y[i] = (int) Math.round(shape[i].getY());
+//    }
     int[] y = new int[shape.length];
-    for(int i=0; i<shape.length; i++){
-      y[i] = (int) Math.round(shape[i].getY());
+    for(int i=0; i<p.length; i++){
+      y[i] = (int) Math.round(p[i].getY());
     }
     return y;
+
   }
 
 }
