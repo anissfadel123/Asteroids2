@@ -55,6 +55,19 @@ class Polygon {
     }
     return points;
   }
+  // checks if this polygon collides with another
+  // if so returns true else returns false
+  boolean collision(Polygon poly){
+    Point[] polyPoints = poly.getPoints();
+    for(int i=0; i<polyPoints.length; i++){
+      if(contains(polyPoints[i])) return true;
+    }
+    Point[] thisPoint = getPoints();//this polygons points
+    for(int i=0; i<shape.length; i++){
+      if(poly.contains(thisPoint[i])) return true;
+    }
+    return false;
+  }
 
   
   // "contains" implements some magical math (i.e. the ray-casting algorithm).

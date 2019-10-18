@@ -57,10 +57,6 @@ public class Ship extends Polygon implements KeyListener {
             System.out.println("up");
             up = true;
         }
-        if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("down");
-            down = true;
-        }
         if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
             System.out.println("right");
             right = true;
@@ -74,10 +70,19 @@ public class Ship extends Polygon implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        up = false;
-        down = false;
-        right = false;
-        left = false;
+        if(e.getKeyCode() == KeyEvent.VK_UP) {
+            System.out.println("up");
+            up = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            System.out.println("right");
+            right = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+            System.out.println("left");
+            left = false;
+        }
+//
 
     }
 }

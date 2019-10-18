@@ -15,6 +15,7 @@ class Asteroids extends Game {
     private Point[] shipPoints;
     private int shipXpoint[];
     private int shipYpoint[];
+    int amtAsteroid = 5;
     List<Point[]> asteroidShape;
     Asteroid[] ast;
     Random random;
@@ -67,7 +68,7 @@ class Asteroids extends Game {
     Point shipInitLocation = new Point(width/2-1, height/2-1);
     ship = new Ship(shipPoints, shipInitLocation, 0);
 
-      ast = createAsteriod(5);
+      ast = createAsteriod(amtAsteroid);
       if(ast == null) {
           System.out.println("Asteroid bitch");
       }
@@ -93,12 +94,24 @@ class Asteroids extends Game {
         brush.setColor(Color.black);
         brush.fillRect(0,0,width,height);
 
+        boolean shipcollides = false;
+        if(ship != null && ast != null){
+
+            for(int i = 0; i <ast.length; i++){
+                if(ship.collision(ast[i])){
+                    shipcollides = true;
+                    break;
+                }
+            }
+        }
 
         if(ship != null) {
 
             brush.setColor(Color.red);
             brush.fillPolygon(ship.getXPoints(), ship.getYPoints(), 4);
-            ship.move();
+            if(!shipcollides) {
+                ship.move();
+            }
         }
         if(ast != null) {
             for (int i = 0; i < ast.length; i++) {
@@ -106,7 +119,9 @@ class Asteroids extends Game {
                     brush.setColor(Color.white);
                     brush.fillPolygon(ast[i].getXPoints(), ast[i].getYPoints(), 4);
                     System.out.println("Asteroid Ready");
-                    ast[i].move();
+                    if(!shipcollides) {
+                        ast[i].move();
+                    }
                 }
             }
         }
