@@ -9,7 +9,7 @@ import java.awt.event.*;
 
 abstract class Game extends Canvas {
   protected boolean on = true;
-  protected int width, height;
+  protected static int width, height;
   protected Image buffer;
   
 	public Game(String name, int inWidth, int inHeight) {
@@ -38,7 +38,7 @@ abstract class Game extends Canvas {
   // a second before repeating itself, assuming the game is on. This is done
   // to avoid a choppy painting experience if repainted in pieces.
   public void update(Graphics brush) {
-      System.out.println("helllo");
+
     paint(buffer.getGraphics());
 		brush.drawImage(buffer,0,0,this);
     if (on) {sleep(10); repaint();}

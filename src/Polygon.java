@@ -12,7 +12,7 @@ USAGE: You are intended to instantiate this class with a set of points that
 NOTE: You don't need to worry about the "magic math" details.
 */
 
-class Polygon {
+class Polygon extends Shape{
   public Point[] shape;   // An array of points.
   public Point position;   // The offset mentioned above.
   public double rotation; // Zero degrees is due east.
@@ -118,27 +118,18 @@ class Polygon {
 //    System.out.println("bbbbbb");
     if(shape == null || shape.length==0) return null;
     int[] x = new int[shape.length];
-//    for(int i=0; i<shape.length; i++){
-//      System.out.println("shitttttt");
-//      x[i] = (int) Math.round(shape[i].getX());
-//
-//    }
     Point[] p = getPoints();
 
     for(int i=0; i<p.length; i++){
       x[i] = (int) Math.round(p[i].getX());
     }
-//
+
     return x;
   }
   public int[] getYPoints(){
     if(shape == null || shape.length==0) return null;
     Point[] p = getPoints();
 
-//    int[] y = new int[shape.length];
-//    for(int i=0; i<shape.length; i++){
-//      y[i] = (int) Math.round(shape[i].getY());
-//    }
     int[] y = new int[shape.length];
     for(int i=0; i<p.length; i++){
       y[i] = (int) Math.round(p[i].getY());

@@ -13,12 +13,13 @@ import java.util.Random;
 class Asteroids extends Game {
     private Ship ship;
     private Point[] shipPoints;
-    private int shipXpoint[];
-    private int shipYpoint[];
     int amtAsteroid = 5;
+    int amtStars = 50;
     List<Point[]> asteroidShape;
+    Star[] stars;
     Asteroid[] ast;
     Random random;
+    List<Bullet> bullets;
 
 
 
@@ -26,13 +27,21 @@ class Asteroids extends Game {
     super("Asteroids!",800,600);
     random = new Random();
 
+    createStars();
+
 
     //shipPoint contains a set of points that defines the ship's shape
     shipPoints = new Point[4];
     shipPoints[0] = new Point(0,0);
-    shipPoints[1] = new Point(20,10);
+    shipPoints[1] = new Point(20,10);  //head
     shipPoints[2] = new Point(0, 20);
     shipPoints[3] = new Point(10, 10);
+
+      // shipInitLocation contains the coordinate of the ship's
+      // initial location
+      Point shipInitLocation = new Point(width/2-1, height/2-1);
+      ship = new Ship(shipPoints, shipInitLocation, 0,1);
+      bullets = ship.bullets;
 
     // creating 4 different shapes of asteroids
     asteroidShape = new ArrayList<>();
@@ -63,19 +72,21 @@ class Asteroids extends Game {
       temp[4] = new Point(20, 0);
       asteroidShape.add(temp);
 
-    // shipInitLocation contains the coordinate of the ship's
-      // initial location
-    Point shipInitLocation = new Point(width/2-1, height/2-1);
-    ship = new Ship(shipPoints, shipInitLocation, 0);
+
 
       ast = createAsteriod(amtAsteroid);
-      if(ast == null) {
-          System.out.println("Asteroid bitch");
-      }
 
       this.addKeyListener(ship);
 
   }
+  private void createStars(){
+        stars = new Star[amtStars];
+        for(int i=0; i<amtStars; i++){
+            Point pnt = new Point(random.nextInt(width), random.nextInt(height));
+            stars[i] = new Star(pnt, random.nextInt(5));
+        }
+
+    }
   private Asteroid[] createAsteriod(int amount){
       Asteroid[] asteroid = new Asteroid[amount];
       for(int i=0; i<amount; i++){
@@ -91,9 +102,18 @@ class Asteroids extends Game {
   
 	public void paint(Graphics brush) {
 
+
         brush.setColor(Color.black);
         brush.fillRect(0,0,width,height);
 
+        if(stars!=null){
+        for(int i=0; i<amtStars; i++) {
+            brush.setColor(Color.white);
+            brush.fillOval((int)stars[i].getX(), (int)stars[i].getY(),
+                    2*(int)stars[i].getRadius(), 2*(int)stars[i].getRadius());
+            }
+
+        }
         boolean shipcollides = false;
         if(ship != null && ast != null){
 
@@ -116,13 +136,22 @@ class Asteroids extends Game {
         if(ast != null) {
             for (int i = 0; i < ast.length; i++) {
                 if (ast[i] != null) {
-                    brush.setColor(Color.white);
+                    brush.setColor(new Color(101,67,33)); // brown
                     brush.fillPolygon(ast[i].getXPoints(), ast[i].getYPoints(), 4);
-                    System.out.println("Asteroid Ready");
+//                    System.out.println("Asteroid Ready");
                     if(!shipcollides) {
                         ast[i].move();
                     }
                 }
+            }
+        }
+        if(bullets != null){
+            for(int i=0; i<bullets.size(); i++){
+                Bullet bullet = bullets.get(i);
+                brush.setColor(Color.white);
+                brush.fillOval((int)bullet.getX(), (int)bullet.getY(),
+                        2*(int)bullet.getRadius(), 2*(int)bullet.getRadius());
+                bullet.move();
             }
         }
 
